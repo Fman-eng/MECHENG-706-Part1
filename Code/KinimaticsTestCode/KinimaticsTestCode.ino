@@ -18,8 +18,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  float WheelLeftFront  = (Vx + Vy - (Lx + Ly))/R;
-  float WheelRightFront = (Vx - Vy + (Lx + Ly))/R;
-  float WheelLeftBack   = (Vx - Vy - (Lx + Ly))/R;
-  float WheelRightBack  = (Vx + Vy + (Lx + Ly))/R;
+  float WheelLeftFront  = (Vx + Vy - (Lx + Ly)*W)/R;
+  float WheelRightFront = (Vx - Vy + (Lx + Ly)*W)/R;
+  float WheelLeftBack   = (Vx - Vy - (Lx + Ly)*W)/R;
+  float WheelRightBack  = (Vx + Vy + (Lx + Ly)*W)/R;
 }
