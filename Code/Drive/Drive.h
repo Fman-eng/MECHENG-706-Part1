@@ -1,12 +1,18 @@
-#define LED_1_PIN 9
-class Led {
-    // class definition
+#ifndef DRIVE_H
+#define DRIVE_H
+#include <Arduino.h>
+#include <Servo.h>   // include the library of servo motor control
+
+class Drive {
+  private:
+    byte leftFront, leftRear, rightFront, rightRear;
+    int speedVar = 100; 
+    int speedChange;
+    
+  public:
+    Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear);
+    void init();
+    void forward();
+    void halt();
 };
-Led led1(LED_1_PIN);
-void setup() { }
-void loop() {
-    led1.on();
-    delay(500);
-    led.off();
-    delay(500);
- 
+#endif
