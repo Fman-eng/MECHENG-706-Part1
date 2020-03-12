@@ -5,31 +5,44 @@ Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear) {
   this->leftRear = leftRear;
   this->rightFront = rightFront;
   this->rightRear = rightRear;
-  init();
+  Init();
 }
-void Drive::init() {
-  Serial.begin(9600);
+void Drive::Init() {
   pinMode(leftFront, OUTPUT);
   pinMode(leftRear, OUTPUT);
   pinMode(rightFront, OUTPUT);
   pinMode(rightRear, OUTPUT);
-
-  Servo leftFrontMotor;
-  Servo leftRearMotor;
-  Servo rightFrontMotor;
-  Servo rightRearMotor;
+  EnableMotors();
 }
 
-void forward(){// moving forward   
-  leftFrontMotor.writeMicroseconds(1500 + speedVal);
-  leftRearMotor.writeMicroseconds(1500 + speedVal);
-  rightFrontMotor.writeMicroseconds(1500 - speedVal);
-  rightRearMotor.writeMicroseconds(1500 - speedVal);
+void Drive::EnableMotors() {
+  this->leftFrontMotor.attach(leftFront);
+  this->leftRearMotor.attach(leftRear);
+  this->rightFrontMotor.attach(rightFront);
+  this->rightRearMotor.attach(rightRear);
+  }
+
+void Drive::DisableMotors() {
+ this->leftFrontMotor.detach();  
+ this->leftRearMotor.detach();
+ this->rightFrontMotor.detach();
+ this->rightRearMotor.detach();
 }
 
-void halt(){// stop motors   left_front_motor.writeMicroseconds(1500);
-  leftFrontMotor.writeMicroseconds(1500);
-  leftRearMotor.writeMicroseconds(1500);
-  rightFrontMotor.writeMicroseconds(1500);
-  rightRearMotor.writeMicroseconds(1500);
+void Drive::Forward(){// moving forward   
+  Serial.println("Driving forward");
+  this->leftFrontMotor.writeMicroseconds(1500 + this->speedVal);
+  this->leftRearMotor.writeMicroseconds(1500 + this->speedVal);
+  this->rightFrontMotor.writeMicroseconds(1500 - this->speedVal);
+  this->rightRearMotor.writeMicroseconds(1500 - this->speedVal);
+  Serial.println("Ending Driving forward");
+}
+
+void Drive::Halt(){// stop motors   left_front_motor.writeMicroseconds(1500);
+  Serial.println("Halting");
+  this->leftFrontMotor.writeMicroseconds(1500);
+  this->leftRearMotor.writeMicroseconds(1500);
+  this->rightFrontMotor.writeMicroseconds(1500);
+  this->rightRearMotor.writeMicroseconds(1500);
+  Serial.println("Ending Halt");
 }

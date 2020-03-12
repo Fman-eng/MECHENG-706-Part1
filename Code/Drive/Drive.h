@@ -6,13 +6,16 @@
 class Drive {
   private:
     byte leftFront, leftRear, rightFront, rightRear;
-    int speedVar = 100; 
+    Servo leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor;
+    int speedVal = 100; 
     int speedChange;
     
   public:
     Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear);
-    void init();
-    void forward();
-    void halt();
+    void Init();
+    void EnableMotors();
+    void DisableMotors();
+    void Forward();
+    void Halt();
 };
 #endif
