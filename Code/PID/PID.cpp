@@ -1,5 +1,8 @@
 #include "PID.h"
-
+#include "Arduino.h"
+/*
+Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
+*/
 PID::PID(float pGain, float iGain, float dGain){
   this->pGain = pGain;
   this->iGain = iGain;

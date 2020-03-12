@@ -1,6 +1,6 @@
 /*
   PID.h - Library for a PID controller.
-  Freeman Porten
+  Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
 */
 #ifndef PID_h
 #define PID_h
