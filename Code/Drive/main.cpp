@@ -6,9 +6,11 @@
 
 Drive drive1(LEFT_FRONT, LEFT_REAR, RIGHT_REAR, RIGHT_FRONT);
 
-void setup() { }
+void setup() { 
+    Serial.begin(9600);}
 void loop() {
-    drive1.forward();
-    delay(100);
-    drive1.halt();
+    drive1.Forward();
+    delay(2000);
+    drive1.Halt();
+    delay(5000);
 }
