@@ -1,4 +1,9 @@
 void setup() {
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
   // Wheel radius in MilliMeters
   float R = 20;
   
@@ -12,12 +17,9 @@ void setup() {
   float Vy = 10; //test
   
   // Angular rotation of robot in milli radians per sec, positive is CCW.
-  float W = 10 //test
-}
+  float W = 10; //test
 
-void loop() {
-  // put your main code here, to run repeatedly:
-
+  
   float WheelLeftFront  = (Vx + Vy - (Lx + Ly)*W)/R;
   float WheelRightFront = (Vx - Vy + (Lx + Ly)*W)/R;
   float WheelLeftBack   = (Vx - Vy - (Lx + Ly)*W)/R;
