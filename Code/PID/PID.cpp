@@ -1,4 +1,4 @@
-#include PID.h
+#include "PID.h"
 
 PID::PID(float pGain, float iGain, float dGain){
   this->pGain = pGain;
@@ -12,7 +12,7 @@ float PID::GetControl(float in, float timeStep, bool isSaturated){
   float out;
   
   // Calculate integrator Error
-  if(!isSaturated){intergratorError += in*timeStep};
+  if(!isSaturated)intergratorError += in*timeStep;
   
   // Calculate PID control signal
   out =  pGain*in + iGain*intergratorError + dGain*(in-lastIn)/timeStep;
