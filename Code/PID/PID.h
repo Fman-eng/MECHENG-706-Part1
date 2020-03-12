@@ -12,11 +12,10 @@ class PID
     float pGain;
     float iGain;
     float dGain;
-    float maxControlSignal;
     float intergratorError;
     float lastIn;
   public:
-    PID(float pGain, float iGain, float dGain, float maxControlSignal);
+    PID(float pGain, float iGain, float dGain);
     float GetControl(float in, float timeStep, bool isSaturated);
 };
 #endif
