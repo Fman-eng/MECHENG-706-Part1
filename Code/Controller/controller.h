@@ -18,8 +18,8 @@ class Controller
     bool[3] isSaturated;
   public:
     Controller(PID* PIDVx, PID* PIDVy, PID* PIDW, float[3] saturateValues, bool[3] isSaturated);
-    float[3] WallFollow(float frontIR, float backIR, float targetDistance);
-    float[3] FrontDetect(float sonar, float targetDistance);
-    float[3] ApplyPID(float[3] in, float timeStep);
+    void WallFollow(float frontIR, float backIR, float targetDistance, float[3] out);
+    void FrontDetect(float sonar, float targetDistance, float[3] out);
+    void ApplyPID(float[3] in, float timeStep, float[3] out);
 };
 #endif
