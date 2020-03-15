@@ -5,7 +5,7 @@ Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear) {
   this->leftRear = leftRear;
   this->rightFront = rightFront;
   this->rightRear = rightRear;
-  Init();
+  speedVal = 100;
 }
 void Drive::Init() {
   pinMode(leftFront, OUTPUT);
