@@ -1,0 +1,2 @@
+SonarSensor	KEYWORD1
+getDistance	KEYWORD2
