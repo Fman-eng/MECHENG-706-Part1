@@ -29,16 +29,29 @@ void Drive::DisableMotors() {
  this->rightRearMotor.detach();
 }
 
-void Drive::Forward(){// moving forward   
+
+void Drive::RotatePID(int turnSpeed, int angle){
+  //Use gyro and PID controller to control rotation
+  }
+
+void Drive::RotateOL(int turnSpeed, int angle){
+  
+  }
+
+void Drive::SetSpeedThroughKinematic(int v_x, int v_y, int omega){
+  int wheelRadius = 20; //wheel radius in mm
+  int lx
+  }
+  
+void Drive::Forward(){// moving forward USED FOR DEBUGGING
   Serial.println("Driving forward");
   this->leftFrontMotor.writeMicroseconds(1500 + this->speedVal);
   this->leftRearMotor.writeMicroseconds(1500 + this->speedVal);
   this->rightFrontMotor.writeMicroseconds(1500 - this->speedVal);
   this->rightRearMotor.writeMicroseconds(1500 - this->speedVal);
-  Serial.println("Ending Driving forward");
 }
 
-void Drive::Halt(){// stop motors   left_front_motor.writeMicroseconds(1500);
+void Drive::Halt(){
   Serial.println("Halting");
   this->leftFrontMotor.writeMicroseconds(1500);
   this->leftRearMotor.writeMicroseconds(1500);
