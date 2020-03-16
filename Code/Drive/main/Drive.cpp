@@ -29,9 +29,6 @@ void Drive::DisableMotors() {
  this->rightRearMotor.detach();
 }
 
-void Drive::DriveRight(int driveSpeed, int distance1, int distance2){
-  
-  }
 
 void Drive::RotatePID(int turnSpeed, int angle){
   //Use gyro and PID controller to control rotation
@@ -42,7 +39,8 @@ void Drive::RotateOL(int turnSpeed, int angle){
   }
 
 void Drive::SetSpeedThroughKinematic(int v_x, int v_y, int omega){
-  
+  int wheelRadius = 20; //wheel radius in mm
+  int lx
   }
   
 void Drive::Forward(){// moving forward USED FOR DEBUGGING

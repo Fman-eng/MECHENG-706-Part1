@@ -16,7 +16,7 @@ class Drive {
     void DisableMotors();
     void RotatePID(int turnSpeed, int angle);
     void RotateOL(int turnSpeed, int angle);
-    void SetSpeedThroughKinematic(int v_x, int v_y, int omega);
+    void SetSpeedThroughKinematic(int vx, int vy, int omega);
     void DriveRight(int driveSpeed, int distance1, int distance2);
     void Forward();
     void Halt();
