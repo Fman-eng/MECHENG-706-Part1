@@ -35,12 +35,29 @@ void Drive::RotatePID(int turnSpeed, int angle){
   }
 
 void Drive::RotateOL(int turnSpeed, int angle){
-  
+   Serial.println("############### Servo Values ##############");
+   while(1){
+   Serial.println(this->leftFrontMotor.read());
+   Serial.println(this->leftRearMotor.read());
+   Serial.println(this->rightFrontMotor.read());
+   Serial.println(this->rightRearMotor.read());
+   this->leftFrontMotor.writeMicroseconds(1500 + turnSpeed);
+   this->leftRearMotor.writeMicroseconds(1500 + turnSpeed);
+   this->rightFrontMotor.writeMicroseconds(1500 + turnSpeed);
+   this->rightRearMotor.writeMicroseconds(1500 + turnSpeed);
+   }
   }
 
-void Drive::SetSpeedThroughKinematic(int v_x, int v_y, int omega){
+void Drive::SetSpeedThroughKinematic(int vx, int vy, int omega){
   int wheelRadius = 20; //wheel radius in mm
-  int lx
+  int lx = 1200; 
+  int ly = 1200;
+
+  this->leftFrontMotor.writeMicroseconds((vx + vy - (lx + ly)*omega)/wheelRadius);
+  this->leftRearMotor.writeMicroseconds((vx - vy - (lx + ly)*omega)/wheelRadius);
+  this->rightFrontMotor.writeMicroseconds((vx + vy - (lx + ly)*omega)/wheelRadius);
+  this->rightRearMotor.writeMicroseconds((vx + vy + (lx + ly)*omega)/wheelRadius);
+  
   }
   
 void Drive::Forward(){// moving forward USED FOR DEBUGGING
