@@ -6,8 +6,8 @@ void setup() {
   unsigned long startTime;
   
   // Sensor Instantiation
-  IRSensor IRFront(uint8_t pin, bool shortRange);
-  IRSensot IRBack(uint8_t pin, bool shortRange);
+  IRSensor IRFront(A14, true);
+  IRSensor IRBack(A15, true);
 
   // motor saturation speeds for Vx, Vy and W
   float sat[3] = {100,100,100};
@@ -16,7 +16,7 @@ void setup() {
   Controller mainController(sat);
 
   // Instantiate Drive
-  Drive drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear);
+  Drive drive(46, 47, 51, 50);
   drive.Init();
   
   float speedVector[3] = {0,0,0};
@@ -30,7 +30,7 @@ void setup() {
     
     mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 1500, speedVector);
     mainController.ApplyPID(speedVector, (micros()- startTime),speedVector);
-    
+    drive.SetSpeedThroughKinematic(speedVector[0], speedVector[1], speedVector[2]);
     
   }
   
