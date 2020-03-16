@@ -48,16 +48,24 @@ void Drive::RotateOL(int turnSpeed, int angle){
    }
   }
 
-void Drive::SetSpeedThroughKinematic(int vx, int vy, int omega){
-  int wheelRadius = 28; //wheel radius in mm
-  int lx = 80; 
-  int ly = 90;
+void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega){
+  float wheelRadius = 28; //wheel radius in mm
+  float lx = 80; 
+  float ly = 90;
 
-  this->leftFrontMotor.writeMicroseconds((vx + vy - (lx + ly)*omega)/wheelRadius);
-  this->leftRearMotor.writeMicroseconds((vx - vy - (lx + ly)*omega)/wheelRadius);
-  this->rightFrontMotor.writeMicroseconds((vx + vy - (lx + ly)*omega)/wheelRadius);
-  this->rightRearMotor.writeMicroseconds((vx + vy + (lx + ly)*omega)/wheelRadius);
-  
+  this->leftFrontMotor.writeMicroseconds(1500 + (vx + vy - (lx + ly)*omega)/wheelRadius);
+  this->leftRearMotor.writeMicroseconds(1500 + (vx - vy - (lx + ly)*omega)/wheelRadius);
+  this->rightRearMotor.writeMicroseconds(1500 - (vx - vy + (lx + ly)*omega)/wheelRadius);
+  this->rightFrontMotor.writeMicroseconds(1500 - (vx + vy + (lx + ly)*omega)/wheelRadius);
+
+  Serial.print("vx: ");
+  Serial.println(vx);
+  Serial.print("vy: ");
+  Serial.println(vy);
+  Serial.print("omega: ");
+  Serial.println(omega);
+  Serial.print("Left Front Wheel = ");
+  Serial.println(1500 + (vx + vy - (lx + ly)*omega)/wheelRadius);
   }
   
 void Drive::Forward(){// moving forward USED FOR DEBUGGING

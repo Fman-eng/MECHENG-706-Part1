@@ -3,6 +3,7 @@
 #include "IRSensor.h"
 
 void setup() {
+  Serial.begin(9600);
   unsigned long startTime;
   
   // Sensor Instantiation
@@ -16,11 +17,11 @@ void setup() {
   Controller mainController(sat);
 
   // Instantiate Drive
-  Drive drive(46, 47, 51, 50);
+  Drive drive(46, 47, 50, 51);
   drive.Init();
   
   float speedVector[3] = {0,0,0};
-
+  float speedVector2[3] = {0,0,0};
 
 
   // Super Loop
@@ -28,9 +29,9 @@ void setup() {
     //get the starting time of the superloop
     startTime = micros();
     
-    mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 1500, speedVector);
-    mainController.ApplyPID(speedVector, (micros()- startTime),speedVector);
-    drive.SetSpeedThroughKinematic(speedVector[0], speedVector[1], speedVector[2]);
+    mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, speedVector);
+    mainController.ApplyPID(speedVector, (float)(micros()- startTime),speedVector2);
+    drive.SetSpeedThroughKinematic(speedVector2[0], speedVector2[1], speedVector2[2]);
     
   }
   

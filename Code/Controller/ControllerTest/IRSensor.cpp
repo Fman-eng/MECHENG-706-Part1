@@ -21,7 +21,7 @@ int IRSensor::getDistance(){
         }else if(_shortRange == false){
             calculatedDistance = longModelCoeffs[0]*exp(longModelCoeffs[1]*averageSensorReading)+longModelCoeffs[2]*exp(longModelCoeffs[3]*averageSensorReading);
         }
-
+    
     return calculatedDistance;
 }
 
