@@ -1,3 +1,0 @@
-IRSensor	KEYWORD1
-getDistance	KEYWORD2
-getSensorReading	KEYWORD2
