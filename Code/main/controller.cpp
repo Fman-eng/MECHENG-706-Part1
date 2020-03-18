@@ -7,7 +7,7 @@
 Controller::Controller(float saturateValues[3]){
   this->PIDVx = PID(100, 0, 0);
   this->PIDVy = PID(100, 0, 0);
-  this->PIDW = PID(1, 0, 0);
+  this->PIDW = PID(1, 0.00001, 0);
 
 	for(int i; i <= 2; i++){
 		this->saturateValues[i] = saturateValues[i];
@@ -18,7 +18,7 @@ Controller::Controller(float saturateValues[3]){
 }
 
 void Controller::WallFollow(float frontIR, float backIR, float targetDistance, float out[3]){
-	out[0] = 0;
+	out[0] = 100;
 	out[1] = targetDistance - (frontIR + backIR)/2;
 	out[2] = frontIR - backIR;
 	return;
