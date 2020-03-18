@@ -13,8 +13,8 @@ class IRSensor
         uint8_t _pin;
         bool _shortRange;
         int sensorReadings[5];
-        float shortModelCoeffs[4] = {992.4, -0.02274, 197.6, -0.002979};
-        float longModelCoeffs[4] = {99.24, -0.002274, 19.76, -0.0002979};
+        float shortModelCoeffs[4] = {909, -0.02958, 282.9, -0.003827};
+        float longModelCoeffs[4] = {898.9, -0.0263, 246.8, -0.003013};
         int sum;
         int averageSensorReading;
         int calculatedDistance;
