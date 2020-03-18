@@ -9,6 +9,7 @@ void setup() {
   // Sensor Instantiation
   IRSensor IRFront(A14, true);
   IRSensor IRBack(A15, true);
+  //SonarSensor SonarFront(A12, A13);
   
   // motor saturation speeds for Vx, Vy and W
   float sat[3] = {100,100,100};
@@ -30,7 +31,7 @@ void setup() {
     startTime = micros();
     
     mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, speedVector);
-    mainController.FrontDetect()
+    //mainController.FrontDetect()
     mainController.ApplyPID(speedVector, (float)(micros()- startTime),speedVector2);
     drive.SetSpeedThroughKinematic(speedVector2[0], speedVector2[1], speedVector2[2]);
     
