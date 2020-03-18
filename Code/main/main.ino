@@ -29,10 +29,11 @@ void setup() {
   while(1){
     //get the starting time of the superloop
     startTime = micros();
-    
-    mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, speedVector);
+    Serial.println(IRBack.getDistance());
+    delay(250);
+    mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, speedVector2);
     //mainController.FrontDetect()
-    mainController.ApplyPID(speedVector, (float)(micros()- startTime),speedVector2);
+    //mainController.ApplyPID(speedVector, (float)(micros()- startTime),speedVector2);
     drive.SetSpeedThroughKinematic(speedVector2[0], speedVector2[1], speedVector2[2]);
     
   }

@@ -5,9 +5,9 @@
 #include "Controller.h"
 #include "PID.h"
 Controller::Controller(float saturateValues[3]){
-  this->PIDVx = PID(100, 0.1, 0);
-  this->PIDVy = PID(100, 0.1, 0);
-  this->PIDW = PID(1, 0.01, 0);
+  this->PIDVx = PID(100, 0, 0);
+  this->PIDVy = PID(100, 0, 0);
+  this->PIDW = PID(1, 0, 0);
 
 	for(int i; i <= 2; i++){
 		this->saturateValues[i] = saturateValues[i];
