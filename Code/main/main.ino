@@ -30,7 +30,6 @@ void setup() {
     //get the starting time of the superloop
     startTime = micros();
     Serial.println(IRBack.getDistance());
-    delay(250);
     mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, speedVector2);
     //mainController.FrontDetect()
     //mainController.ApplyPID(speedVector, (float)(micros()- startTime),speedVector2);
