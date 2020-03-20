@@ -7,16 +7,16 @@ double pidIn[3];
 double pidOut[3];
 double setPoints[3];
 
-PID PIDVx(&pidIn[0],&pidOut[0], &setPoints[0],1000,0,0, DIRECT);
-PID PIDVy(&pidIn[1],&pidOut[1], &setPoints[1],1000,0,0, DIRECT);
-PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2],0.1,0,0, DIRECT);
+PID PIDVx(&pidIn[0],&pidOut[0], &setPoints[0],0,0,0, REVERSE);
+PID PIDVy(&pidIn[1],&pidOut[1], &setPoints[1],0,0,0, REVERSE);
+PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2],1,2,1, REVERSE);
 
 
 void setup() {
   Serial.begin(9600);
-  PIDVx.SetOutputLimits(-100,100);
-  PIDVy.SetOutputLimits(-100,100);
-  PIDW.SetOutputLimits(-1,1);
+  PIDVx.SetOutputLimits(-10000,10000);
+  PIDVy.SetOutputLimits(-10000,10000);
+  PIDW.SetOutputLimits(-20,20);
   
   
   PIDVx.SetMode(AUTOMATIC);
@@ -53,7 +53,6 @@ void setup() {
   // Super Loop
   while(1){
     //get the starting time of the superloop
-    //startTime = micros();
     Serial.println(IRBack.getDistance());
     mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, pidIn);
     //mainController.FrontDetect()
