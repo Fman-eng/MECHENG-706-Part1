@@ -4,21 +4,16 @@
 */
 #ifndef Controller_h
 #define Controller_h
-#include "PID.h"
+#include <PID_v1.h>
 #include "Arduino.h"
 
 class Controller
 {
   private:
-    PID PIDVx;
-    PID PIDVy;
-    PID PIDW;
-    float saturateValues[3];
-    bool isSaturated[3];
+    
   public:
-    Controller(float saturateValues[3]);
-    void WallFollow(float frontIR, float backIR, float targetDistance, float out[3]);
-    void FrontDetect(float sonar, float targetDistance, float out[3]);
-    void ApplyPID(float in[3], float timeStep, float out[3]);
+    Controller();
+    void WallFollow(double frontIR, double backIR, double targetDistance, double out[3]);
+    void FrontDetect(double sonar, double targetDistance, double out[3]);
 };
 #endif
