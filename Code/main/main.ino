@@ -7,16 +7,16 @@ double pidIn[3];
 double pidOut[3];
 double setPoints[3];
 
-PID PIDVx(&pidIn[0],&pidOut[0], &setPoints[0],100,0,0, DIRECT);
-PID PIDVy(&pidIn[1],&pidOut[1], &setPoints[1],100.0,0,0, DIRECT);
-PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2],1,0,0, DIRECT);
+PID PIDVx(&pidIn[0],&pidOut[0], &setPoints[0],1000,0,0, DIRECT);
+PID PIDVy(&pidIn[1],&pidOut[1], &setPoints[1],1000,0,0, DIRECT);
+PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2],0.1,0,0, DIRECT);
 
 
 void setup() {
   Serial.begin(9600);
   PIDVx.SetOutputLimits(-100,100);
   PIDVy.SetOutputLimits(-100,100);
-  PIDW.SetOutputLimits(-100,100);
+  PIDW.SetOutputLimits(-1,1);
   
   
   PIDVx.SetMode(AUTOMATIC);
@@ -37,7 +37,7 @@ void setup() {
   }
 
   setPoints[0] = 0;
-  setPoints[1] = 150;
+  setPoints[1] = 0;
   setPoints[2] = 0;
 
   
