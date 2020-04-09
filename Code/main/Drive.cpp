@@ -1,5 +1,6 @@
 #include "Drive.h"
-Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear) {
+Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear)
+{
   Serial.println("Init drive class!");
   this->leftFront = leftFront;
   this->leftRear = leftRear;
@@ -7,7 +8,8 @@ Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear) {
   this->rightRear = rightRear;
   speedVal = 100;
 }
-void Drive::Init() {
+void Drive::Init()
+{
   pinMode(leftFront, OUTPUT);
   pinMode(leftRear, OUTPUT);
   pinMode(rightFront, OUTPUT);
@@ -15,48 +17,55 @@ void Drive::Init() {
   EnableMotors();
 }
 
-void Drive::EnableMotors() {
+void Drive::EnableMotors()
+{
   this->leftFrontMotor.attach(leftFront);
   this->leftRearMotor.attach(leftRear);
   this->rightFrontMotor.attach(rightFront);
   this->rightRearMotor.attach(rightRear);
-  }
-
-void Drive::DisableMotors() {
- this->leftFrontMotor.detach();  
- this->leftRearMotor.detach();
- this->rightFrontMotor.detach();
- this->rightRearMotor.detach();
 }
 
+void Drive::DisableMotors()
+{
+  this->leftFrontMotor.detach();
+  this->leftRearMotor.detach();
+  this->rightFrontMotor.detach();
+  this->rightRearMotor.detach();
+}
 
-void Drive::RotatePID(int turnSpeed, int angle){
+void Drive::RotatePID(int turnSpeed, int angle)
+{
   //Use gyro and PID controller to control rotation
-  }
+}
 
-void Drive::RotateOL(int turnSpeed, int angle){
-   Serial.println("############### Servo Values ##############");
-   while(1){
-   Serial.println(this->leftFrontMotor.read());
-   Serial.println(this->leftRearMotor.read());
-   Serial.println(this->rightFrontMotor.read());
-   Serial.println(this->rightRearMotor.read());
-   this->leftFrontMotor.writeMicroseconds(1500 + turnSpeed);
-   this->leftRearMotor.writeMicroseconds(1500 + turnSpeed);
-   this->rightFrontMotor.writeMicroseconds(1500 + turnSpeed);
-   this->rightRearMotor.writeMicroseconds(1500 + turnSpeed);
-   }
+void Drive::RotateOL(int turnSpeed, int angle)
+{ /* 
+    Take an turn speed and angle and turn the robot for
+    that angle. Positive angle (i.e. 90) corrisponds
+    to clockwise rotation of the robot.
+  */
+  long startTime = millis();
+  float angleToTime = 10;
+  while (millis() < startTime + angleToTime * abs(angle))
+  {
+    int turnDirection = angle/abs(angle);
+    this->leftFrontMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
+    this->leftRearMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
+    this->rightFrontMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
+    this->rightRearMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
   }
+}
 
-void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega){
+void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
+{
   float wheelRadius = 28; //wheel radius in mm
-  float lx = 80; 
+  float lx = 80;
   float ly = 90;
 
-  this->leftFrontMotor.writeMicroseconds(1500 + (vx + vy - (lx + ly)*omega)/wheelRadius);
-  this->leftRearMotor.writeMicroseconds(1500 + (vx - vy - (lx + ly)*omega)/wheelRadius);
-  this->rightRearMotor.writeMicroseconds(1500 - (vx - vy + (lx + ly)*omega)/wheelRadius);
-  this->rightFrontMotor.writeMicroseconds(1500 - (vx + vy + (lx + ly)*omega)/wheelRadius);
+  this->leftFrontMotor.writeMicroseconds(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
+  this->leftRearMotor.writeMicroseconds(1500 + (vx - vy - (lx + ly) * omega) / wheelRadius);
+  this->rightRearMotor.writeMicroseconds(1500 - (vx - vy + (lx + ly) * omega) / wheelRadius);
+  this->rightFrontMotor.writeMicroseconds(1500 - (vx + vy + (lx + ly) * omega) / wheelRadius);
 
   Serial.print("vx: ");
   Serial.println(vx);
@@ -65,10 +74,11 @@ void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega){
   Serial.print("omega: ");
   Serial.println(omega);
   Serial.print("Left Front Wheel = ");
-  Serial.println(1500 + (vx + vy - (lx + ly)*omega)/wheelRadius);
-  }
-  
-void Drive::Forward(){// moving forward USED FOR DEBUGGING
+  Serial.println(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
+}
+
+void Drive::Forward()
+{ // moving forward USED FOR DEBUGGING
   Serial.println("Driving forward");
   this->leftFrontMotor.writeMicroseconds(1500 + this->speedVal);
   this->leftRearMotor.writeMicroseconds(1500 + this->speedVal);
@@ -76,7 +86,8 @@ void Drive::Forward(){// moving forward USED FOR DEBUGGING
   this->rightRearMotor.writeMicroseconds(1500 - this->speedVal);
 }
 
-void Drive::Halt(){
+void Drive::Halt()
+{
   Serial.println("Halting");
   this->leftFrontMotor.writeMicroseconds(1500);
   this->leftRearMotor.writeMicroseconds(1500);

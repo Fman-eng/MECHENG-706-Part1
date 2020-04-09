@@ -9,17 +9,14 @@
 Controller::Controller(){
 }
 
-bool Controller::RotateForWall(float frontIR, float backIR, float out[3]){
-  Serial.print("Front IR = ");
-  Serial.println(frontIR);
-  Serial.print("BackIR = ");
-  Serial.println(backIR);
-  Serial.print("IR Difference = ");
-  Serial.println(frontIR - backIR);
+bool Controller::RotateForWall(double sonarVals[2], float out[3]){
+  dSonarThreshold = 20; // Needs to be found experimentially
+  dSonar = sonarVals[0] - sonarVals[1]; // sonarVals[1] is last sonar, [0] is current
+  sonarVals[1] = sonarVals[0];
   out[0] = 0;
   out[1] = 0;
-  out[2] = frontIR - backIR;
-  return abs(frontIR - backIR) < 20;
+  out[2] = -20; // Turning speed initially, CW
+  return dsonar > dSonarThreshold;
 }
 
 void Controller::WallFollow(double frontIR, double backIR, double targetDistance, double out[3]){
