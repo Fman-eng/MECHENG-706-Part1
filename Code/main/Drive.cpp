@@ -1,3 +1,7 @@
+/*
+  Drive.cpp - Source file for the Drive class for an arduino based robot.
+  Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
+*/
 #include "Drive.h"
 Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear)
 {
@@ -48,11 +52,11 @@ void Drive::RotateOL(int turnSpeed, int angle)
   float angleToTime = 10;
   while (millis() < startTime + angleToTime * abs(angle))
   {
-    int turnDirection = angle/abs(angle);
-    this->leftFrontMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
-    this->leftRearMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
-    this->rightFrontMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
-    this->rightRearMotor.writeMicroseconds(1500 + turnSpeed*turnDirection);
+    int turnDirection = angle / abs(angle);
+    this->leftFrontMotor.writeMicroseconds(1500 + turnSpeed * turnDirection);
+    this->leftRearMotor.writeMicroseconds(1500 + turnSpeed * turnDirection);
+    this->rightFrontMotor.writeMicroseconds(1500 + turnSpeed * turnDirection);
+    this->rightRearMotor.writeMicroseconds(1500 + turnSpeed * turnDirection);
   }
 }
 

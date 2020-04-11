@@ -1,4 +1,7 @@
-
+/*
+  main.ino - 
+  Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
+*/
 #include "Controller.h"
 #include "Drive.h"
 #include "IRSensor.h"
@@ -51,22 +54,23 @@ void setup()
 
   // Initalisation variables
   bool init_finished = false;
-  double sensorVals[2];
+  double sonarVals[2];
 
   // Super Loop
   while (1)
   {
     //get the starting time of the superloop
     Serial.println(IRBack.getDistance());
-    if(!init_finished){
-      sensorVals[0] = sonar.getDistance();
-      init_finished = mainController.RotateForWall(double sonarVals[2], float out[3]);
-      }
-    } else{
+    if (!init_finished)
+    {
+      sonarVals[0] = sonar.getDistance();
+      init_finished = mainController.RotateForWall(sonarVals, pidIn);
+    }
+    else
+    {
       mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, pidIn);
       //mainController.FrontDetect()
     }
-
 
     PIDVx.Compute();
     PIDVy.Compute();

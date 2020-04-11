@@ -9,12 +9,11 @@
 
 class Controller
 {
-  private:
-    
-  public:
-    Controller();
-    bool RotateForWall(float frontIR, float backIR, int rotateDirection, float out[3]); 
-    void WallFollow(double frontIR, double backIR, double targetDistance, double out[3]);
-    void FrontDetect(double sonar, double targetDistance, double out[3]);
+private:
+public:
+  Controller();
+  bool RotateForWall(double sonarVals[2], double out[3]);
+  void WallFollow(double frontIR, double backIR, double targetDistance, double out[3]);
+  void FrontDetect(double sonar, double targetDistance, double out[3]);
 };
 #endif

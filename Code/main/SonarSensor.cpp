@@ -1,16 +1,21 @@
+/*
+  SonarSensor.cpp - A source file for the sonar sensor class for an arduino based robot.
+  Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
+*/
 #include "Arduino.h"
 #include "SonarSensor.h"
 
-SonarSensor::SonarSensor(int triggerPin, int echoPin){
+SonarSensor::SonarSensor(int triggerPin, int echoPin)
+{
     _triggerPin = triggerPin;
     _echoPin = echoPin;
 
     pinMode(_triggerPin, OUTPUT);
     pinMode(_echoPin, INPUT);
-
 }
 
-int SonarSensor::getDistance(){
+int SonarSensor::getDistance()
+{
     digitalWrite(_triggerPin, LOW);
     delayMicroseconds(2);
     startMicros = micros();

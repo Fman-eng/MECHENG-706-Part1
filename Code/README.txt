@@ -7,12 +7,25 @@
 *
 ***************************************************************
 RUNNING THE CODE:
-To open the files in an Arduino IDE, double click the main.ino file. 
+1) Before you can run any code you'll need to install all the 
+required libaries namely;
+    - Servo V1.1.6
+    - PID by Brett Beauregard V1.20
+You can install the Servo libary and potentially the PID libary using 
+Arduino's libary manager in Tools-> Manage Libaries - > Then using the 
+search bar.
+However, if you are unable to find the PID libary in the libary manager
+you can donwload the zip file of it from that authors github at 
+https://github.com/br3ttb/Arduino-PID-Library
+and install the libary using Sketch -> Include Libary -> Add .Zip Libary
+and then navigating to the .zip file where the libary was installed.
+
+2) To open the files in an Arduino IDE, double click the main.ino file. 
 Alternatively, inside of the Arduino IDE, you can go File->Open and then
 from there select to open the main.ino file. Doing so will automatically
 open the other files.
 
-Building and uploading the files is the same for other arduino files. Just
+3) Building and uploading the files is the same for other arduino files. Just
 select 'Verify' to compile all the files or 'Upload' to compiles and upload
 the files to the selected port/board. 
 
