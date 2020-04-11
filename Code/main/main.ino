@@ -1,5 +1,5 @@
 /*
-  main.ino - 
+  main.ino - Main file for arduino based wall following program.
   Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
 */
 #include "Controller.h"

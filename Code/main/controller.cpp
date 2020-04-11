@@ -5,6 +5,9 @@
 #include <PID_v1.h>
 #include "Controller.h"
 
+Controller::Controller(){
+}
+
 bool Controller::RotateForWall(double sonarVals[2], double out[3])
 {
   double dSonarThreshold = 20;                 // Needs to be found experimentially
