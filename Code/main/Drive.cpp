@@ -3,6 +3,14 @@
   Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
 */
 #include "Drive.h"
+
+/**
+ * Contructor for the Drive class
+ * 
+ * Takes the pin allocation of the robots 4 servo motors as inputs and
+ * makes the 4 class variables corrisponding to the 4 servo motors equal
+ * to the input pin allocations.
+ */
 Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear)
 {
   Serial.println("Init drive class!");
@@ -10,8 +18,15 @@ Drive::Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear)
   this->leftRear = leftRear;
   this->rightFront = rightFront;
   this->rightRear = rightRear;
-  speedVal = 100;
 }
+
+/**
+ * Initializes and enables the robots 4 servo motors
+ * 
+ * Sets the 4 servo motor pins as outputs and calls
+ * the EnableMotors function which attaches 4 Servo
+ * objects to the 4 pins set as outputs.
+ */
 void Drive::Init()
 {
   pinMode(leftFront, OUTPUT);
@@ -21,6 +36,12 @@ void Drive::Init()
   EnableMotors();
 }
 
+/**
+ * Enable/attach the 4 servo motors
+ * 
+ * Attach the 4 servo class variables to the 4 pins
+ * which are wiried to the servo motors. 
+ */
 void Drive::EnableMotors()
 {
   this->leftFrontMotor.attach(leftFront);
@@ -29,6 +50,12 @@ void Drive::EnableMotors()
   this->rightRearMotor.attach(rightRear);
 }
 
+/**
+ * Disable the 4 servo motors
+ * 
+ * Disattach the 4 servo class variables to the 4 pins
+ * which are wiried to the servo motors. 
+ */
 void Drive::DisableMotors()
 {
   this->leftFrontMotor.detach();
@@ -37,17 +64,27 @@ void Drive::DisableMotors()
   this->rightRearMotor.detach();
 }
 
+/**
+ * Rotate the robot with closed loop control
+ * 
+ * Given a specified turn speed and angle, rotate
+ * the robote using a closed loop controller with a
+ * gyroscope as the sensor.
+ */
 void Drive::RotatePID(int turnSpeed, int angle)
 {
   //Use gyro and PID controller to control rotation
 }
 
+/**
+ * Rotate the robot using open looped control
+ * 
+ * Take an turn speed and angle and turn the robot for
+ * that angle. Positive angle (i.e. 90) corrisponds
+ * to clockwise rotation of the robot.
+ */
 void Drive::RotateOL(int turnSpeed, int angle)
-{ /* 
-    Take an turn speed and angle and turn the robot for
-    that angle. Positive angle (i.e. 90) corrisponds
-    to clockwise rotation of the robot.
-  */
+{ 
   long startTime = millis();
   float angleToTime = 10;
   while (millis() < startTime + angleToTime * abs(angle))
@@ -60,6 +97,14 @@ void Drive::RotateOL(int turnSpeed, int angle)
   }
 }
 
+/**
+ * Control the robots movements using it's kinematic equations
+ * 
+ * Specify the desired velocity in the x and y (vx and vy)
+ * and the desired rotation (omega) and based on the robots
+ * kinematic equations the appropriate speed will be sent to 
+ * each of it's servo motors.
+ */
 void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
 {
   float wheelRadius = 28; //wheel radius in mm
@@ -81,8 +126,11 @@ void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
   Serial.println(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
 }
 
+/**
+ * Drive the robot forward at a specified speed
+ */
 void Drive::Forward()
-{ // moving forward USED FOR DEBUGGING
+{
   Serial.println("Driving forward");
   this->leftFrontMotor.writeMicroseconds(1500 + this->speedVal);
   this->leftRearMotor.writeMicroseconds(1500 + this->speedVal);
@@ -90,6 +138,9 @@ void Drive::Forward()
   this->rightRearMotor.writeMicroseconds(1500 - this->speedVal);
 }
 
+/**
+ * Stop the robot from moving in any direction
+ */
 void Drive::Halt()
 {
   Serial.println("Halting");

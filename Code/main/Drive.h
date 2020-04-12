@@ -12,7 +12,7 @@ class Drive
 private:
   byte leftFront, leftRear, rightFront, rightRear;
   Servo leftFrontMotor, leftRearMotor, rightFrontMotor, rightRearMotor;
-  int speedVal;
+  int speedVal = 100;
 
 public:
   Drive(byte leftFront, byte leftRear, byte rightFront, byte rightRear);
