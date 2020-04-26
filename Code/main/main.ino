@@ -48,7 +48,7 @@ void setup()
   
   // Sensor Instantiation
   IRSensor IRFront(A14, true);
-  IRSensor IRBack(A15, true);
+  IRSensor IRBack(A15, false);
   SonarSensor sonar(48, 49);
 
   // Intstantiated the Controller
@@ -133,10 +133,8 @@ void setup()
         slower than the super loop. Every few loops the PIDs will be recalulated,
         this ensures that the timestep stay constant prefencting issues with the
         intergrator and derivitive term */
-        PIDVx.SetMode(AUTOMATIC);
         PIDVy.SetMode(AUTOMATIC);
         PIDW.SetMode(AUTOMATIC);
-        PIDVx.Compute();
         PIDVy.Compute();
         PIDW.Compute();
         
@@ -148,7 +146,7 @@ void setup()
         if ((abs(frontAvg - rearAvg) > 20) || (abs((frontAvg + rearAvg)/2) > 10)){
           alignTimer = millis();
         }
-        if (millis()-alignTimer >= 1000) isAligning = 0;
+        if (millis()-alignTimer >= 500) isAligning = 0;
         
       }else{
         /* This sets the value of Vy and Wz in the velocities array by using the
