@@ -18,7 +18,6 @@ int SonarSensor::getDistance()
 {
     digitalWrite(_triggerPin, LOW);
     delayMicroseconds(2);
-    startMicros = micros();
     digitalWrite(_triggerPin, HIGH);
     delayMicroseconds(5);
     digitalWrite(_triggerPin, LOW);
@@ -30,5 +29,4 @@ int SonarSensor::getDistance()
     }else{
       return (int)(duration / 2.9 / 2);
     }
-    
 }

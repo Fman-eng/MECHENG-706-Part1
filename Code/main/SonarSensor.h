@@ -15,11 +15,7 @@ class SonarSensor
     int _triggerPin;
     int _echoPin;
     
-    long startMicros;
-    long endMicros;
     long duration;
-
-    int timeoutCounter;
 };
 
 #endif

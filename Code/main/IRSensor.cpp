@@ -5,10 +5,10 @@
 #include "Arduino.h"
 #include "IRSensor.h"
 
-IRSensor::IRSensor(uint8_t pin, bool shortRange)
+IRSensor::IRSensor(uint8_t pin, bool sensorOne)
 {
     _pin = pin;
-    _shortRange = shortRange;
+    _sensorOne = sensorOne;
     pinMode(pin, INPUT);
 }
 
@@ -25,11 +25,11 @@ int IRSensor::getDistance()
 
     if (_shortRange == true)
     {
-        calculatedDistance = shortModelCoeffs[0] * exp(shortModelCoeffs[1] * averageSensorReading) + shortModelCoeffs[2] * exp(shortModelCoeffs[3] * averageSensorReading);
+        calculatedDistance = sensorOneCoeffs[0] * exp(sensorOneCoeffs[1] * averageSensorReading) + sensorOneCoeffs[2] * exp(sensorOneCoeffs[3] * averageSensorReading);
     }
     else if (_shortRange == false)
     {
-        calculatedDistance = longModelCoeffs[0] * exp(longModelCoeffs[1] * averageSensorReading) + longModelCoeffs[2] * exp(longModelCoeffs[3] * averageSensorReading);
+        calculatedDistance = sensorTwoCoeffs[0] * exp(sensorTwoCoeffs[1] * averageSensorReading) + sensorTwoCoeffs[2] * exp(sensorTwoCoeffs[3] * averageSensorReading);
     }
 
     return calculatedDistance;
