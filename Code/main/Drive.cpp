@@ -118,7 +118,7 @@ void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
   this->leftRearMotor.writeMicroseconds(1500 + saturateScaler * (vx - vy - (lx + ly) * omega) / wheelRadius);
   this->rightRearMotor.writeMicroseconds(1500 - saturateScaler * (vx - vy + (lx + ly) * omega) / wheelRadius);
   this->rightFrontMotor.writeMicroseconds(1500 - saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
-  Serial.println(saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
+  //Serial.println(saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
   //Serial.print("vx: ");
   //Serial.println(vx);
   //Serial.print("vy: ");
