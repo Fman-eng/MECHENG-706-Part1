@@ -3,7 +3,6 @@
   Group 2: Freeman Porten, Lachlan Barnes, Jake Olliff, Calvin Lee
 */
 
-#include <PID_v1.h>
 #include "Controller.h"
 
 Controller::Controller(){

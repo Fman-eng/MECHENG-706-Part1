@@ -4,7 +4,6 @@
 */
 #ifndef Controller_h
 #define Controller_h
-#include <PID_v1.h>
 #include "Arduino.h"
 
 class Controller

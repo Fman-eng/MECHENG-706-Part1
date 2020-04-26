@@ -6,6 +6,7 @@
 #include "Drive.h"
 #include "IRSensor.h"
 #include "SonarSensor.h"
+#include "PID_v1.h"
 
 double pidIn[3];
 double pidOut[3];
