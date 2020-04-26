@@ -13,14 +13,14 @@ double setPoints[3];
 
 PID PIDVx(&pidIn[0], &pidOut[0], &setPoints[0], 0, 0, 0, REVERSE);
 PID PIDVy(&pidIn[1], &pidOut[1], &setPoints[1], 0, 0, 0, REVERSE);
-PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2], 1, 0, 0, REVERSE);
+PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2], 450, 0, 0, REVERSE);
 
 void setup()
 {
   Serial.begin(9600);
   PIDVx.SetOutputLimits(-500, 500);
   PIDVy.SetOutputLimits(-500, 500);
-  PIDW.SetOutputLimits(-20, 20);
+  PIDW.SetOutputLimits(-500, 500);
 
   PIDVx.SetMode(AUTOMATIC);
   PIDVy.SetMode(AUTOMATIC);
@@ -76,7 +76,7 @@ void setup()
     PIDVx.Compute();
     PIDVy.Compute();
     PIDW.Compute();
-    Serial.println(pidOut[2]);
+    //Serial.println(pidOut[2]);
     drive.SetSpeedThroughKinematic(pidOut[0], pidOut[1], pidOut[2]);
   }
 }
