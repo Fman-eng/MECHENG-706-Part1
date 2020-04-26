@@ -15,7 +15,7 @@ bool Controller::InitForWall(double frontIR, double backIR, double out[3])
   out[0] = 0;
   out[1] = 0;
   out[2] = -20; // Turning speed initially, CW
-  return finished ? 1 : -1;
+  return finished ? 0 : -1;
 }
 
 void Controller::WallFollow(double frontIR, double backIR, double targetDistance, double out[3])
