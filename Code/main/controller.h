@@ -11,7 +11,7 @@ class Controller
 private:
 public:
   Controller();
-  bool RotateForWall(double sonarVals[2], double out[3]);
+  bool InitForWall(double frontIR, double backIR, double out[3]);
   void WallFollow(double frontIR, double backIR, double targetDistance, double out[3]);
   void FrontDetect(double sonar, double targetDistance, double out[3]);
 };

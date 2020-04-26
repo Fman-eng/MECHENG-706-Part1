@@ -8,15 +8,14 @@
 Controller::Controller(){
 }
 
-bool Controller::RotateForWall(double sonarVals[2], double out[3])
+bool Controller::InitForWall(double frontIR, double backIR, double out[3])
 {
-  double dSonarThreshold = 20;                 // Needs to be found experimentially
-  double dSonar = sonarVals[0] - sonarVals[1]; // sonarVals[1] is last sonar, [0] is current
-  sonarVals[1] = sonarVals[0];
+  double IRTolerence = 5;
+  bool finished = abs(frontIR - backIR) < IRTolerence;
   out[0] = 0;
   out[1] = 0;
   out[2] = -20; // Turning speed initially, CW
-  return dSonar > dSonarThreshold;
+  return finished ? 1 : -1;
 }
 
 void Controller::WallFollow(double frontIR, double backIR, double targetDistance, double out[3])
