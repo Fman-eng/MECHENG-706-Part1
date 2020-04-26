@@ -13,13 +13,13 @@ double setPoints[3];
 
 PID PIDVx(&pidIn[0], &pidOut[0], &setPoints[0], 0, 0, 0, REVERSE);
 PID PIDVy(&pidIn[1], &pidOut[1], &setPoints[1], 0, 0, 0, REVERSE);
-PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2], 1, 2, 1, REVERSE);
+PID PIDW(&pidIn[2], &pidOut[2], &setPoints[2], 1, 0, 0, REVERSE);
 
 void setup()
 {
   Serial.begin(9600);
-  PIDVx.SetOutputLimits(-10000, 10000);
-  PIDVy.SetOutputLimits(-10000, 10000);
+  PIDVx.SetOutputLimits(-500, 500);
+  PIDVy.SetOutputLimits(-500, 500);
   PIDW.SetOutputLimits(-20, 20);
 
   PIDVx.SetMode(AUTOMATIC);
@@ -60,21 +60,23 @@ void setup()
   while (1)
   {
     //get the starting time of the superloop
-    Serial.println(IRBack.getDistance());
-    if (!init_finished)
-    {
-      sonarVals[0] = sonar.getDistance();
-      init_finished = mainController.RotateForWall(sonarVals, pidIn);
-    }
-    else
-    {
+    //Serial.println(IRBack.getDistance());
+    //if (!init_finished)
+    //{
+      //sonarVals[0] = sonar.getDistance();
+      //Serial.println(sonarVals[0]);
+      //init_finished = mainController.RotateForWall(sonarVals, pidIn);
+    //}
+    //else
+    //{
       mainController.WallFollow(IRFront.getDistance(), IRBack.getDistance(), 150, pidIn);
       //mainController.FrontDetect()
-    }
+    //}
 
     PIDVx.Compute();
     PIDVy.Compute();
     PIDW.Compute();
+    Serial.println(pidOut[2]);
     drive.SetSpeedThroughKinematic(pidOut[0], pidOut[1], pidOut[2]);
   }
 }

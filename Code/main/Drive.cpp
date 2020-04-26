@@ -116,14 +116,14 @@ void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
   this->rightRearMotor.writeMicroseconds(1500 - (vx - vy + (lx + ly) * omega) / wheelRadius);
   this->rightFrontMotor.writeMicroseconds(1500 - (vx + vy + (lx + ly) * omega) / wheelRadius);
 
-  Serial.print("vx: ");
-  Serial.println(vx);
-  Serial.print("vy: ");
-  Serial.println(vy);
-  Serial.print("omega: ");
-  Serial.println(omega);
-  Serial.print("Left Front Wheel = ");
-  Serial.println(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
+  //Serial.print("vx: ");
+  //Serial.println(vx);
+  //Serial.print("vy: ");
+  //Serial.println(vy);
+ // Serial.print("omega: ");
+  //Serial.println(omega);
+  //Serial.print("Left Front Wheel = ");
+ // Serial.println(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
 }
 
 /**
