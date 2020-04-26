@@ -22,7 +22,6 @@ bool Controller::RotateForWall(double sonarVals[2], double out[3])
 void Controller::WallFollow(double frontIR, double backIR, double targetDistance, double out[3])
 {
   float l_IR = 185; //Distance between IR sensors
-  out[0] = 100;
   out[1] = targetDistance - (frontIR + backIR) / 2;
   out[2] = (frontIR - backIR) / (2*l_IR);
   return;

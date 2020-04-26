@@ -112,13 +112,13 @@ void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
   float ly = 90;
   float saturateScaler = 1; //  Scaler to maintain relative speeds between motors while saturated
   
-  if((abs(vx) + abs(vy) + abs((lx + ly) * omega))/ wheelRadius >= 500) saturateScaler = 500 * wheelRadius/(abs(vx) + abs(vy) + abs((lx + ly) * omega));
+  if((abs(vx) + abs(vy) + abs((lx + ly) * omega))/ wheelRadius >= 750) saturateScaler = 750 * wheelRadius/(abs(vx) + abs(vy) + abs((lx + ly) * omega));
  
   this->leftFrontMotor.writeMicroseconds(1500 + saturateScaler * (vx + vy - (lx + ly) * omega) / wheelRadius);
   this->leftRearMotor.writeMicroseconds(1500 + saturateScaler * (vx - vy - (lx + ly) * omega) / wheelRadius);
   this->rightRearMotor.writeMicroseconds(1500 - saturateScaler * (vx - vy + (lx + ly) * omega) / wheelRadius);
   this->rightFrontMotor.writeMicroseconds(1500 - saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
-  Serial.println(1500 - saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
+  Serial.println(saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
   //Serial.print("vx: ");
   //Serial.println(vx);
   //Serial.print("vy: ");
