@@ -48,7 +48,7 @@ void setup()
   
   // Sensor Instantiation
   IRSensor IRFront(A14, true);
-  IRSensor IRBack(A15, true);
+  IRSensor IRBack(A15, false);
   SonarSensor sonar(48, 49);
 
   // Intstantiated the Controller

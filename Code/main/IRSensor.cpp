@@ -23,11 +23,11 @@ int IRSensor::getDistance()
     }
     averageSensorReading = sum / 5;
 
-    if (_shortRange == true)
+    if (_sensorOne == true)
     {
         calculatedDistance = sensorOneCoeffs[0] * exp(sensorOneCoeffs[1] * averageSensorReading) + sensorOneCoeffs[2] * exp(sensorOneCoeffs[3] * averageSensorReading);
     }
-    else if (_shortRange == false)
+    else if (_sensorOne == false)
     {
         calculatedDistance = sensorTwoCoeffs[0] * exp(sensorTwoCoeffs[1] * averageSensorReading) + sensorTwoCoeffs[2] * exp(sensorTwoCoeffs[3] * averageSensorReading);
     }
