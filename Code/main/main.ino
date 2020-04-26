@@ -110,7 +110,7 @@ void setup()
 
     //Intilisation code
     if(cornerCount == -1){
-      
+        cornerCount = InitForWall(frontAvg, rearAvg, pidIn);
     }
     
     // Go round 4 corners
