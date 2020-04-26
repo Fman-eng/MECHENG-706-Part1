@@ -31,9 +31,7 @@ void Controller::WallFollow(double frontIR, double backIR, double targetDistance
 
 void Controller::FrontDetect(double sonar, double targetDistance, double out[3])
 {
-  out[0] = targetDistance - sonar;
-  out[1] = 0;
-  out[2] = 0;
+  out[0] = sonar - targetDistance;
 
   return;
 }
