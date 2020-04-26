@@ -24,5 +24,11 @@ int SonarSensor::getDistance()
     digitalWrite(_triggerPin, LOW);
 
     duration = pulseIn(_echoPin, HIGH);
-    return (int)(duration / 2.9 / 2);
+
+    if(duration == 0){
+      return 2000;
+    }else{
+      return (int)(duration / 2.9 / 2);
+    }
+    
 }
