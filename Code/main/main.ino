@@ -93,13 +93,22 @@ void setup()
     }
     frontAvg = frontAvg/5;
     rearAvg  = rearAvg/5;
-    
+
+    /* This sets the value of Vy and Wz in the velocities array by using the
+    IR sensors to meaure its distance and angle from the wall.*/
     mainController.WallFollow(frontAvg, rearAvg, 145, pidIn);
     mainController.FrontDetect(sonar.getDistance(), 80, pidIn);
 
+    /* Check if the PIDs need to be computed, the PIDs run at 50Hz which is
+    slower than the super loop. Every few loops the PIDs will be recalulated,
+    this ensures that the timestep stay constant prefencting issues with the
+    intergrator and derivitive term */
     PIDVx.Compute();
     PIDVy.Compute();
     PIDW.Compute();
+
+    /* This applies the inverse Kinimatic equations to the motors using
+    the Vx, Vy, Wz stored in the velocity vector that the PID outputs.*/
     drive.SetSpeedThroughKinematic(pidOut[0], pidOut[1], pidOut[2]);
   }
 }
