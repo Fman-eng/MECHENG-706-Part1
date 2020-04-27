@@ -14,7 +14,7 @@ SonarSensor::SonarSensor(int triggerPin, int echoPin)
     pinMode(_echoPin, INPUT);
 }
 
-int SonarSensor::getDistance()
+float SonarSensor::getDistance()
 {
     digitalWrite(_triggerPin, LOW);
     delayMicroseconds(2);
@@ -22,11 +22,11 @@ int SonarSensor::getDistance()
     delayMicroseconds(5);
     digitalWrite(_triggerPin, LOW);
 
-    duration = pulseIn(_echoPin, HIGH);
+    float duration = pulseIn(_echoPin, HIGH, 5800);
 
     if(duration == 0){
-      return 2000;
+      return 1000;
     }else{
-      return (int)(duration / 2.9 / 2);
+      return (float)(duration / 2.9 / 2);
     }
 }

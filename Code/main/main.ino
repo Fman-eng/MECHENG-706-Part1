@@ -8,6 +8,9 @@
 #include "SonarSensor.h"
 #include "PID_v1.h"
 
+#define WALL_FOLLOW_DISTANCE 145
+#define WALL_STOP_DISTANCE 40
+
 // pidIn is the position array input to the PID controllers
 double pidIn[3];
 // pidOut is the output velocity vector array of the PID controllers
@@ -75,6 +78,9 @@ void setup()
   // Corner counter
   int cornerCount = 0;
 
+  // Flag for Intialising and finding the wall
+  int isIntialising = 1;
+
   // Flag for open-loop cornering
   int isTurning = 0;
 
@@ -86,10 +92,12 @@ void setup()
 
   // Flag for finished course
   int isDone = 0;
-  
+  int timer = millis();
   // Super Loop
   while (1)
   {
+    timer = millis();
+
     /* Use a shift register to store the previous values of the IR sensors
     to apply a fourth order FIR filter, this prevents noise interfering
     with the derivative terms of the PID controllers. firItr iterates
@@ -108,55 +116,65 @@ void setup()
     frontAvg = frontAvg/5;
     rearAvg  = rearAvg/5;
 
+    
     //Intilisation code
-    if(cornerCount == -1){
-        cornerCount = mainController.InitForWall(frontAvg, rearAvg, pidIn);
+    if(isIntialising){
+      Serial.println("Intialising");
+        if(mainController.InitForWall(frontAvg, rearAvg, pidOut)){
+          isAligning = 1;
+          isIntialising = 0;
+          alignTimer = millis();
+        }
+   
+      PIDVx.SetMode(MANUAL);
+      PIDVy.SetMode(MANUAL);
+      PIDW.SetMode(MANUAL);
+    }
+    /* This contains the logic for the open-loop turning at the corners*/
+    else if(isTurning)
+    {
+      Serial.println("is turning");
+      PIDVx.SetMode(MANUAL);
+      PIDVy.SetMode(MANUAL);
+      PIDW.SetMode(MANUAL);
+      drive.RotateOL(500, 90);
+      isAligning = 1;
+      alignTimer = millis();
+    }
+    // Align robot without moving forward before leaving corner
+    else if(isAligning){
+      Serial.println("aligning");
+      mainController.WallFollow(frontAvg, rearAvg, WALL_FOLLOW_DISTANCE, pidIn);
+      pidIn[0] = 0;
+      pidOut[0] = 0;
+      
+      /* Check if the PIDs need to be computed, the PIDs run at 50Hz which is
+      slower than the super loop. Every few loops the PIDs will be recalulated,
+      this ensures that the timestep stay constant prefencting issues with the
+      intergrator and derivitive term */
+      PIDVx.SetMode(MANUAL);
+      PIDVy.SetMode(AUTOMATIC);
+      PIDW.SetMode(AUTOMATIC);
+
+      // Wait till PID has finished aligning
+      if ((abs(frontAvg - rearAvg) > 5) || (abs(WALL_FOLLOW_DISTANCE-(frontAvg + rearAvg)/2) > 5)){
+        alignTimer = millis();
+      }
+      Serial.println(abs(frontAvg - rearAvg));
+      if (millis()-alignTimer >= 1000) isAligning = 0;    
     }
     
     // Go round 4 corners
-    else if(cornerCount < 4){
-      if(isTurning){
-        /* This contains the logic for the open-loop turning at the corners*/
-        PIDVx.SetMode(MANUAL);
-        PIDVy.SetMode(MANUAL);
-        PIDW.SetMode(MANUAL);
-        drive.RotateOL(500, 90);
-        isTurning = 0;
-        isAligning = 1;
-        alignTimer = millis();
-      }else if(isAligning){
-        // Align robot without moving forward before leaving corner
-        mainController.WallFollow(frontAvg, rearAvg, 145, pidIn);
-        pidIn[0] = 0;
-
-        /* Check if the PIDs need to be computed, the PIDs run at 50Hz which is
-        slower than the super loop. Every few loops the PIDs will be recalulated,
-        this ensures that the timestep stay constant prefencting issues with the
-        intergrator and derivitive term */
-        PIDVy.SetMode(AUTOMATIC);
-        PIDW.SetMode(AUTOMATIC);
-        PIDVy.Compute();
-        PIDW.Compute();
-        
-        /* This applies the inverse Kinimatic equations to the motors using
-        the Vx, Vy, Wz stored in the velocity vector that the PID outputs.*/
-        drive.SetSpeedThroughKinematic(pidOut[0], pidOut[1], pidOut[2]);
-        Serial.println(abs(frontAvg - rearAvg));
-        // Wait till PID has finished aligning
-        if ((abs(frontAvg - rearAvg) > 20) || (abs((frontAvg + rearAvg)/2) > 10)){
-          alignTimer = millis();
-        }
-        if (millis()-alignTimer >= 500) isAligning = 0;
-        
-      }else{
+    else if(cornerCount <= 4){
+      Serial.println("wall following");
         /* This sets the value of Vy and Wz in the velocities array by using the
         IR sensors to meaure its distance and angle from the wall. The wall follow
         is set to 145mm to account for the location of the IR sensorson the robot.
         front detect is set to have the robot stop 40mm from the next wall*/
         float sonarDist = sonar.getDistance();
-        mainController.WallFollow(frontAvg, rearAvg, 145, pidIn);
-        mainController.FrontDetect(sonarDist, 40, pidIn);
-        
+        mainController.WallFollow(frontAvg, rearAvg, WALL_FOLLOW_DISTANCE, pidIn);
+        mainController.FrontDetect(sonarDist, WALL_STOP_DISTANCE, pidIn);
+
         /* Check if the PIDs need to be computed, the PIDs run at 50Hz which is
         slower than the super loop. Every few loops the PIDs will be recalulated,
         this ensures that the timestep stay constant prefencting issues with the
@@ -164,25 +182,37 @@ void setup()
         PIDVx.SetMode(AUTOMATIC);
         PIDVy.SetMode(AUTOMATIC);
         PIDW.SetMode(AUTOMATIC);
-        PIDVx.Compute();
-        PIDVy.Compute();
-        PIDW.Compute();
-        
+ 
+        /* Check if the next wall has been reached, increment the corner
+        counter and turn the next corner.*/
+        if(sonarDist <= WALL_STOP_DISTANCE + 5){
+          if(cornerCount < 4)isTurning = 2;
+          cornerCount++;
+        }
+    } else {
+      Serial.println("Program Finished");
+        // Program finished
+        PIDVx.SetMode(MANUAL);
+        PIDVy.SetMode(MANUAL);
+        PIDW.SetMode(MANUAL);
+        pidOut[0] = 0;
+        pidOut[1] = 0;
+        pidOut[2] = 0;
+    }
+    
+    PIDVx.Compute();
+    PIDVy.Compute();
+    PIDW.Compute();
+
+    if(isTurning) {
+      isTurning--;
+    }
+    else{
         /* This applies the inverse Kinimatic equations to the motors using
         the Vx, Vy, Wz stored in the velocity vector that the PID outputs.*/
         drive.SetSpeedThroughKinematic(pidOut[0], pidOut[1], pidOut[2]);
-        
-        /* Check if the next wall has been reached, increment the corner
-        counter and turn the next corner.*/
-        if(sonarDist <= 45){
-          cornerCount++;
-          isTurning = 1;
-        }
-      }
-    } else {
-        // Program finished
-        drive.SetSpeedThroughKinematic(0,0,0);
     }
+    //Serial.println(millis()-timer);
   }
 }
 

@@ -9,13 +9,13 @@ class SonarSensor
 {
     public:
     SonarSensor(int triggerPin, int echoPin);
-    int getDistance();
+    float getDistance();
     
     private:
     int _triggerPin;
     int _echoPin;
     
-    long duration;
+    //float duration;
 };
 
 #endif
