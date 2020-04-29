@@ -120,7 +120,7 @@ void setup()
     //Intilisation code
     if(isIntialising){
       Serial.println("Intialising");
-        if(mainController.InitForWall(frontAvg, rearAvg, pidOut)){
+        if(mainController.InitForWall(frontAvg, rearAvg, pidOut)){x
           isAligning = 1;
           isIntialising = 0;
           alignTimer = millis();
