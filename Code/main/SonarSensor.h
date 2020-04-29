@@ -14,13 +14,13 @@
 */
 class SonarSensor
 {
-    public:
-    SonarSensor(int triggerPin, int echoPin);   //Constructor for the SonarSensor class
-    float getDistance();    //function that returns a distance measured by the sonar sensor
-    
-    private:
-    int _triggerPin;    //Stores which pin the trigger signal is connected to
-    int _echoPin;   //Stores which pin the echo signal is connected to
+public:
+  SonarSensor(int triggerPin, int echoPin); //Constructor for the SonarSensor class
+  float getDistance();                      //function that returns a distance measured by the sonar sensor
+
+private:
+  int _triggerPin; //Stores which pin the trigger signal is connected to
+  int _echoPin;    //Stores which pin the echo signal is connected to
 };
 
 #endif

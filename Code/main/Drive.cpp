@@ -73,7 +73,7 @@ void Drive::DisableMotors()
  */
 void Drive::RotatePID(int turnSpeed, int angle)
 {
-  //Use gyro and PID controller to control rotation
+  //Use gyro and PID controller to control rotation (not needed in A1 implementation)
 }
 
 /**
@@ -84,7 +84,7 @@ void Drive::RotatePID(int turnSpeed, int angle)
  * to clockwise rotation of the robot.
  */
 void Drive::RotateOL(int turnSpeed, int angle)
-{ 
+{
   long startTime = millis();
   float angleToTime = 10;
   while (millis() < startTime + angleToTime * abs(angle))
@@ -107,13 +107,14 @@ void Drive::RotateOL(int turnSpeed, int angle)
  */
 void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
 {
-  float wheelRadius = 28;   //  wheel radius in mm
+  float wheelRadius = 28; //  wheel radius in mm
   float lx = 80;
   float ly = 90;
   float saturateScaler = 1; //  Scaler to maintain relative speeds between motors while saturated
-  
-  if((abs(vx) + abs(vy) + abs((lx + ly) * omega))/ wheelRadius >= 750) saturateScaler = 750 * wheelRadius/(abs(vx) + abs(vy) + abs((lx + ly) * omega));
- 
+
+  if ((abs(vx) + abs(vy) + abs((lx + ly) * omega)) / wheelRadius >= 750)
+    saturateScaler = 750 * wheelRadius / (abs(vx) + abs(vy) + abs((lx + ly) * omega));
+
   this->leftFrontMotor.writeMicroseconds(1500 + saturateScaler * (vx + vy - (lx + ly) * omega) / wheelRadius);
   this->leftRearMotor.writeMicroseconds(1500 + saturateScaler * (vx - vy - (lx + ly) * omega) / wheelRadius);
   this->rightRearMotor.writeMicroseconds(1500 - saturateScaler * (vx - vy + (lx + ly) * omega) / wheelRadius);
@@ -123,10 +124,10 @@ void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
   //Serial.println(vx);
   //Serial.print("vy: ");
   //Serial.println(vy);
- // Serial.print("omega: ");
+  // Serial.print("omega: ");
   //Serial.println(omega);
   //Serial.print("Left Front Wheel = ");
- // Serial.println(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
+  // Serial.println(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
 }
 
 /**
