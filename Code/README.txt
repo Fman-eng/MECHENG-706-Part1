@@ -10,18 +10,23 @@ RUNNING THE CODE:
 1) Before you can run any code you may need to install all the 
 required libaries namely;
     - Servo V1.1.6
-You can install the Servo libary and potentially the PID libary using 
-Arduino's libary manager in Tools-> Manage Libaries - > Then using the 
-search bar.
+You can install the Servo libary using 
+Arduino's library manager in Tools-> Manage Libraries - > Then using the 
+search bar. This code uses the PID library of Brett Beauregard under a
+GPLv3 License the Header file and .cpp file are included in this download
+and thus do not need to be installed separately.
 
 2) To open the files in an Arduino IDE, double click the main.ino file. 
 Alternatively, inside of the Arduino IDE, you can go File->Open and then
 from there select to open the main.ino file. Doing so will automatically
 open the other files.
 
-3) Building and uploading the files is the same for other arduino files. Just
-select 'Verify' to compile all the files or 'Upload' to compiles and upload
-the files to the selected port/board. 
+3) Building and uploading the files is the same for other Arduino files. Just
+select 'Verify' to compile all the files or 'Upload' to compile and upload
+the files to the selected port/board. Keep in mind that the correct board
+must be selected when uploading, for the robots supplied the correct board
+is the Arduino Mega 2560. This can be changed through Tools-> Board and
+selecting the correct board from the drop down.
 
 CHANGING THE PINS:
 If the board or pin arrangement is changed, the code can be changed from
