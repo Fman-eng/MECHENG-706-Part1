@@ -165,7 +165,7 @@ void setup()
       {
         alignTimer = millis();
       }
-      Serial.println(abs(frontAvg - rearAvg));
+      // Waits till the robot is alligned for 0.25 sec
       if (millis() - alignTimer >= 250)
         isAligning = 0;
     }
@@ -206,9 +206,8 @@ void setup()
       PIDVx.SetMode(MANUAL);
       PIDVy.SetMode(MANUAL);
       PIDW.SetMode(MANUAL);
-      pidOut[0] = 0;
-      pidOut[1] = 0;
-      pidOut[2] = 0;
+      drive.Halt()
+      drive.DisableMotors();
     }
 
     PIDVx.Compute();
