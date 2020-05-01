@@ -3,9 +3,9 @@
 
 clc;
 clear;
-[Sensor1,Distance1,Sensor3,Distance3] = readvars('IRSensorTesting.xlsx');
+[Distance1, Sensor1Reading,Distance3, Sensor3Reading] = readvars('IRSensorTesting.xlsx');
 
 %Select a two term, exponential fit to get correct values.
-cftool(Sensor1,Distance1);
+cftool(Distance1, Sensor1Reading);
 
-cftool(Sensor3,Distance3);
+cftool(Distance3,Sensor3Reading);
