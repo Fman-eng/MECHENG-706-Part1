@@ -93,11 +93,9 @@ void setup()
 
   // Flag for finished course
   int isDone = 0;
-  int timer = millis();
   // Super Loop
   while (1)
   {
-    timer = millis();
 
     /* Use a shift register to store the previous values of the IR sensors
     to apply a fourth order FIR filter, this prevents noise interfering
@@ -199,6 +197,7 @@ void setup()
         cornerCount++;
       }
     }
+    /* When the end point is reached stop the motors*/
     else
     {
       Serial.println("Program Finished");
@@ -206,7 +205,7 @@ void setup()
       PIDVx.SetMode(MANUAL);
       PIDVy.SetMode(MANUAL);
       PIDW.SetMode(MANUAL);
-      drive.Halt()
+      drive.Halt();
       drive.DisableMotors();
     }
 
@@ -214,6 +213,8 @@ void setup()
     PIDVy.Compute();
     PIDW.Compute();
 
+    /*  Check for OL control, do not use the
+    closed loop control if isTurning is true*/
     if (isTurning)
     {
       isTurning--;
@@ -224,7 +225,6 @@ void setup()
         the Vx, Vy, Wz stored in the velocity vector that the PID outputs.*/
       drive.SetSpeedThroughKinematic(pidOut[0], pidOut[1], pidOut[2]);
     }
-    //Serial.println(millis()-timer);
   }
 }
 
