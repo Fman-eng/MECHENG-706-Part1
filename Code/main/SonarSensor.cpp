@@ -43,7 +43,7 @@ float SonarSensor::getDistance()
 
   // Start timer and wait for the echo pin to go from high to low, timeout is set to 1m distance equivilent in microseconds
   float duration = pulseIn(_echoPin, HIGH, 5800);
-
+  
   // If timeout has occurred return 1 meter, else return the calculated distance
   if (duration == 0)
   {

@@ -107,14 +107,14 @@ void Drive::RotateOL(int turnSpeed, int angle)
  */
 void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
 {
+  float maxSpeed = 750;
   float wheelRadius = 28; //  wheel radius in mm
   float lx = 80;
   float ly = 90;
   float saturateScaler = 1; //  Scaler to maintain relative speeds between motors while saturated
 
-  if ((abs(vx) + abs(vy) + abs((lx + ly) * omega)) / wheelRadius >= 750)
-    saturateScaler = 750 * wheelRadius / (abs(vx) + abs(vy) + abs((lx + ly) * omega));
-
+  if ((abs(vx) + abs(vy) + abs((lx + ly) * omega)) / wheelRadius >= maxSpeed)
+    saturateScaler = maxSpeed * wheelRadius / (abs(vx) + abs(vy) + abs((lx + ly) * omega));
   this->leftFrontMotor.writeMicroseconds(1500 + saturateScaler * (vx + vy - (lx + ly) * omega) / wheelRadius);
   this->leftRearMotor.writeMicroseconds(1500 + saturateScaler * (vx - vy - (lx + ly) * omega) / wheelRadius);
   this->rightRearMotor.writeMicroseconds(1500 - saturateScaler * (vx - vy + (lx + ly) * omega) / wheelRadius);

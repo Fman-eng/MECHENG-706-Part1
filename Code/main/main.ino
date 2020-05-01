@@ -30,9 +30,9 @@ void setup()
 
   /* These prevent Intergrator windup by stoping the intergrator summing
   if the output goes outside of the range specified below. */
-  PIDVx.SetOutputLimits(-5000, 5000);
-  PIDVy.SetOutputLimits(-3000, 3000);
-  PIDW.SetOutputLimits(-20, 20);
+  PIDVx.SetOutputLimits(-8000, 8000);
+  PIDVy.SetOutputLimits(-8000, 8000);
+  PIDW.SetOutputLimits(-2000, 2000);
 
   /* Begin the PIDs in manual mode as we start with Open-loop control
   to find the starting wall. */
@@ -166,7 +166,7 @@ void setup()
         alignTimer = millis();
       }
       Serial.println(abs(frontAvg - rearAvg));
-      if (millis() - alignTimer >= 1000)
+      if (millis() - alignTimer >= 250)
         isAligning = 0;
     }
 
