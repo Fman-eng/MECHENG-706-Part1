@@ -103,7 +103,11 @@ void Drive::RotateOL(int turnSpeed, int angle)
  * Specify the desired velocity in the x and y (vx and vy)
  * and the desired rotation (omega) and based on the robots
  * kinematic equations the appropriate speed will be sent to 
- * each of it's servo motors.
+ * each of it's servo motors. A scalar is applied to each
+ * motor to keep each motor out of its saturation region,
+ * this also maintains the relative speed between each motor
+ * ensuring that no single input signal dominates the others
+ * in control actuation.
  */
 void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
 {
@@ -119,15 +123,6 @@ void Drive::SetSpeedThroughKinematic(float vx, float vy, float omega)
   this->leftRearMotor.writeMicroseconds(1500 + saturateScaler * (vx - vy - (lx + ly) * omega) / wheelRadius);
   this->rightRearMotor.writeMicroseconds(1500 - saturateScaler * (vx - vy + (lx + ly) * omega) / wheelRadius);
   this->rightFrontMotor.writeMicroseconds(1500 - saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
-  //Serial.println(saturateScaler * (vx + vy + (lx + ly) * omega) / wheelRadius);
-  //Serial.print("vx: ");
-  //Serial.println(vx);
-  //Serial.print("vy: ");
-  //Serial.println(vy);
-  // Serial.print("omega: ");
-  //Serial.println(omega);
-  //Serial.print("Left Front Wheel = ");
-  // Serial.println(1500 + (vx + vy - (lx + ly) * omega) / wheelRadius);
 }
 
 /**
